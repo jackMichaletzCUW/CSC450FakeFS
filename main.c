@@ -12,6 +12,7 @@
 #include "string.h"
 
 char* input;
+formatted_hard_drive* drive;
 
 void process_input() {
     
@@ -22,15 +23,15 @@ void process_input() {
         int request = 0;
         scanf("%d", &request);
         
-        file_system_allocate(input, request);
-        file_system_print_file(input);
+        file_system_allocate(input, request, drive);
+        file_system_print_file(input, drive);
     } else if(strcmp(input, "PRINTFILE") == 0) {
         printf("What is the name of the file you would like to print? ");
         scanf("%s", input);
         
-        file_system_print_file(input);
+        file_system_print_file(input, drive);
     } else if(strcmp(input, "PRINTFS") == 0) {
-        file_system_print();
+        file_system_print(drive);
     } else {
         printf("Invalid command. Please try again.\n");
     }
@@ -47,7 +48,7 @@ int main(int argc, const char * argv[]) {
     int hdsize = 0;
     scanf("%d", &hdsize);
     
-    file_system_initialize(hdsize);
+    drive = file_system_initialize(hdsize);
     
     printf("The commands you can use are ADDFILE, PRINTFILE, PRINTFS.\n");
     
